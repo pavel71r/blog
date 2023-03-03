@@ -1,0 +1,45 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #ebeef3;
+  font-family: "Roboto";
+  font-size: 14px;
+}
+
+button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+span,
+button {
+  font: inherit;
+}
+
+ul,
+li,
+h1,
+h2,
+h3,
+input,
+form,
+p {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+.active {
+  color: #52c41a;
+  border: 1px solid #52c41a;
+}

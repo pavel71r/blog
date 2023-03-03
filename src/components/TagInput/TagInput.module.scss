@@ -1,0 +1,37 @@
+.btnTag {
+  padding: 8px 12px;
+  font-size: 16px;
+  border: 1px solid red;
+  color: red;
+  border-radius: 5px;
+  width: 130px;
+}
+
+.inputTag {
+  padding: 8px 12px;
+  font-size: 16px;
+  border: 1px solid lightgray;
+  border-radius: 5px;
+  &::placeholder {
+    opacity: 0.7;
+    font-size: 14px;
+  }
+  width: 300px;
+}
+
+.wrapperTag {
+  display: flex;
+  gap: 10px;
+}
+
+.addTag {
+  border: 1px solid #1890ff;
+  color: #1890ff;
+  padding: 8px 12px;
+  font-size: 16px;
+  border-radius: 5px;
+  width: 130px;
+  position: absolute;
+  bottom: 45px;
+  left: 500px;
+}

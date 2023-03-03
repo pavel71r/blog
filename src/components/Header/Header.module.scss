@@ -1,0 +1,44 @@
+.header {
+  background-color: white;
+  gap: 20px;
+  height: 78px;
+  display: flex;
+  align-items: center;
+  padding: 16px 22px;
+}
+
+.title {
+  font-family: "Inter";
+  font-weight: normal;
+  font-size: 18px;
+  flex-grow: 1;
+}
+
+.btn {
+  font-family: "Inter";
+  font-size: 18px;
+  padding: 8px 18px;
+  border-radius: 5px;
+}
+
+.active {
+  color: #52c41a;
+  border: 1px solid #52c41a;
+}
+
+.logOut {
+  border: 1px solid;
+}
+
+.logo {
+  width: 46px;
+  height: 46px;
+  background-color: lightgray;
+  border-radius: 50%;
+}
+
+.text {
+  font-family: "Inter";
+  font-weight: normal;
+  font-size: 18px;
+}

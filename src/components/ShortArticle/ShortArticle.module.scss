@@ -1,0 +1,76 @@
+.wrapper {
+  display: flex;
+  justify-content: space-between;
+  background-color: white;
+  padding: 15px 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px lightgrey;
+  width: 941px;
+  height: 140px;
+}
+
+.info {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding-right: 72px;
+  align-items: flex-end;
+}
+
+.logo {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 46px;
+  height: 46px;
+}
+
+.img {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+}
+
+.date {
+  opacity: 0.7;
+  font-size: 14px;
+}
+
+.header {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+
+.title {
+  color: #1890ff;
+  font-size: 20px;
+}
+
+.tag {
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid gray;
+  padding: 2px 5px;
+}
+
+.tagsWrapper {
+  display: flex;
+  gap: 10px;
+}
+
+.text {
+  font-size: 14px;
+  line-height: 22px;
+}
+
+.wrapperText {
+  width: 682px;
+  overflow: hidden;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}

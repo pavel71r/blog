@@ -1,0 +1,109 @@
+.wrapper {
+  display: flex;
+  justify-content: space-between;
+  margin: 24px auto 0;
+  width: 941px;
+  min-height: 807px;
+  background: white;
+  padding: 15px 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px lightgrey;
+}
+
+.info {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding-right: 72px;
+  align-items: flex-end;
+}
+
+.logo {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 46px;
+  height: 46px;
+}
+
+.date {
+  opacity: 0.7;
+  font-size: 14px;
+}
+
+.header {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.title {
+  color: #1890ff;
+  font-size: 20px;
+}
+
+.tag {
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid gray;
+  padding: 2px 5px;
+}
+
+.tagWrapper {
+  display: flex;
+  gap: 10px;
+}
+
+.description {
+  line-height: 22px;
+  opacity: 0.7;
+}
+
+.text {
+  font-size: 16px;
+  line-height: 22px;
+}
+
+.wrapperText {
+  width: 682px;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.img {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+}
+
+.delete {
+  font-family: "Inter";
+  font-size: 18px;
+  padding: 8px 18px;
+  border-radius: 5px;
+  color: red;
+  border: 1px solid red;
+  position: absolute;
+  top: 100px;
+  right: 100px;
+}
+
+.edit {
+  position: absolute;
+  top: 100px;
+  right: 15px;
+  font-family: "Inter";
+  font-size: 18px;
+  padding: 8px 18px;
+  border-radius: 5px;
+  color: #52c41a;
+  border: 1px solid #52c41a;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
