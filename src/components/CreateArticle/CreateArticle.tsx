@@ -23,7 +23,7 @@ const CreateArticle = () => {
   } = useForm<ArticleMiniType>({ mode: "onBlur" });
 
   const navigate = useNavigate();
-  const [tagList, setTagList] = useState<Array<string>>([]);
+  const [tagList, setTagList] = useState<Array<string>>(article.tagList);
 
   const updateTagList = (value: Array<{ id: string; value: string }>) => {
     setTagList(value.map((el) => el.value));
