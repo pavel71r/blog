@@ -111,3 +111,7 @@ export type RateType = {
   favorited: boolean;
   favoritesCount: number;
 };
+
+export type PrivateType = {
+  children: JSX.Element;
+};

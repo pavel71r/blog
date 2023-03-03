@@ -12,6 +12,7 @@ import Article from "../Article/Article";
 import { getArticles } from "../../store/slice/articleSlice";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import { loginUser } from "../../store/slice/userSlice";
+import Private from "../../hoc/Private";
 
 const App = () => {
   const dispatch = useAppDispatch();
@@ -37,7 +38,14 @@ const App = () => {
         <Route path="/SignUp" element={<FormSignUp />} />
         <Route path="/SignIn" element={<FormSignIn />} />
         <Route path="/Article/:slug" element={<Article />} />
-        <Route path="/CreateArticle" element={<CreateArticle />} />
+        <Route
+          path="/CreateArticle"
+          element={
+            <Private>
+              <CreateArticle />
+            </Private>
+          }
+        />
         <Route path="/EditProfile" element={<FormEditProfile />} />
         <Route
           path="/"

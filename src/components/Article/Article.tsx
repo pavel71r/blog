@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 import { format, parseISO } from "date-fns";
 import { Popconfirm as Popup } from "antd";
 import { v4 } from "uuid";
+import ReactMarkdown from "react-markdown";
 
 import { getArticle, deleteArticle } from "../../store/slice/articleSlice";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
@@ -52,7 +53,7 @@ const Article = () => {
         <div className={style.tagWrapper}>{tags}</div>
         <div className={style.wrapperText}>
           <p className={style.description}>{article.description}</p>
-          <p className={style.text}>{article.body}</p>
+          <ReactMarkdown className={style.text}>{article.body}</ReactMarkdown>
         </div>
       </div>
       <div className={style.info}>
