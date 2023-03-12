@@ -1,15 +1,15 @@
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 
-import { newArticle } from "../../store/slice/articleSlice";
+import { updateArticle } from "../../store/slice/articleSlice";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { useAppSelector } from "../../hooks/useAppSelector";
 import type { ArticleMiniType } from "../../types";
 import { path } from "../../path/path";
 import FormArticle from "../FormArticle/FormArticle";
 
-const CreateArticle = () => {
+const EditArticle = () => {
   const dispatch = useAppDispatch();
   const { token } = useAppSelector((state) => state.userSlice.user);
   const { article } = useAppSelector((state) => state.articleSlice);
@@ -17,6 +17,7 @@ const CreateArticle = () => {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<ArticleMiniType>({ mode: "onBlur" });
 
@@ -28,10 +29,21 @@ const CreateArticle = () => {
   };
 
   const onSubmit: SubmitHandler<ArticleMiniType> = (event) => {
-    dispatch(newArticle({ article: event, token: token, tagList })).then(() => {
-      navigate(path.home);
-    });
+    dispatch(
+      updateArticle({
+        article: event,
+        token: token,
+        slug: article.slug,
+        tagList,
+      })
+    ).then(() => navigate(`${path.article}${article.slug}`));
   };
+
+  useEffect(() => {
+    setValue("title", article.title);
+    setValue("description", article.description);
+    setValue("body", article.body);
+  }, [article, setValue]);
 
   return (
     <FormArticle
@@ -40,9 +52,9 @@ const CreateArticle = () => {
       handleSubmit={handleSubmit}
       updateTagList={updateTagList}
       onSubmit={onSubmit}
-      title={"Create new article"}
+      title={"Edit article"}
     />
   );
 };
 
-export default CreateArticle;
+export default EditArticle;

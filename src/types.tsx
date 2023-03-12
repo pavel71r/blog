@@ -1,15 +1,25 @@
-export type UserStateType = {
-  user: UserType;
-  statusUser: string;
+export type LoginUserType = {
+  email: string | null;
+  password: string | null;
 };
 
-export type UserType = {
+export type UpdateUserType = {
+  user: {
+    email: string;
+    password: string;
+    username: string;
+    repeatPassword: string;
+  };
   token: string;
-  email: string;
-  username: string;
-  image: string;
 };
 
+export type CreateUserType = {
+  email: string;
+  password: string;
+  username: string;
+  repeatPassword: string;
+  checkbox: string;
+};
 export type ArticleStateType = {
   articlesCount: number;
   articles: Array<ArticleType>;
@@ -37,29 +47,6 @@ export type AuthorType = {
   following: boolean;
 };
 
-export type CreateUserType = {
-  email: string;
-  password: string;
-  username: string;
-  repeatPassword: string;
-  checkbox: string;
-};
-
-export type LoginUserType = {
-  email: string | null;
-  password: string | null;
-};
-
-export type UpdateUserType = {
-  user: {
-    email: string;
-    password: string;
-    username: string;
-    repeatPassword: string;
-  };
-  token: string;
-};
-
 export type GetArticlesType = {
   value: number;
   token: string;
@@ -83,11 +70,6 @@ export type GetArticleType = {
   token: string;
 };
 
-export type DeleteArticleType = {
-  slug: string;
-  token: string;
-};
-
 export type CreateUserFormType = {
   email: string;
   password: string;
@@ -101,17 +83,7 @@ export type ArticleMiniType = {
   description: string;
   body: string;
 };
-
-export type TagType = {
-  updateTagList: (value: { id: string; value: string }[]) => void;
-};
-
-export type RateType = {
+export type DeleteArticleType = {
   slug: string;
-  favorited: boolean;
-  favoritesCount: number;
-};
-
-export type PrivateType = {
-  children: JSX.Element;
+  token: string;
 };

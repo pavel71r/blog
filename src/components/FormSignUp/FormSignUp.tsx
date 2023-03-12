@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 
-import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
+import { useAppDispatch } from "../../hooks/useAppDispatch";
+import { useAppSelector } from "../../hooks/useAppSelector";
 import { createUser, resetStatus } from "../../store/slice/userSlice";
 import Spinner from "../Spinner/Spinner";
 import type { CreateUserType } from "../../types";
+import { path } from "../../path/path";
+import { SchemaSignUp } from "../../yup/yup";
 
 import style from "./FormSignUp.module.scss";
-
-const patternEmail =
-  /^((([0-9A-Za-z]{1}[-0-9A-z.]{0,30}[0-9A-Za-z]?)|([0-9А-Яа-я]{1}[-0-9А-я.]{0,30}[0-9А-Яа-я]?))@([-A-Za-z]{1,}\.){1,}[-A-Za-z]{2,})$/;
 
 const FormSignUp = () => {
   const dispatch = useAppDispatch();
@@ -18,7 +19,7 @@ const FormSignUp = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<CreateUserType>({ mode: "onBlur" });
+  } = useForm<CreateUserType>({ mode: "onBlur", resolver: yupResolver(SchemaSignUp) });
 
   const { statusUser } = useAppSelector((state) => state.userSlice);
   const navigate = useNavigate();
@@ -27,7 +28,7 @@ const FormSignUp = () => {
   const onSubmit: SubmitHandler<CreateUserType> = (user) => {
     if (user.password === user.repeatPassword) {
       setPass(false);
-      dispatch(createUser(user)).then(() => navigate("/SignIn", { replace: true }));
+      dispatch(createUser(user)).then(() => navigate(path.singIn, { replace: true }));
     } else setPass(true);
   };
 
@@ -49,25 +50,13 @@ const FormSignUp = () => {
             autoComplete="off"
             className={style.input}
             placeholder="Username"
-            {...register("username", {
-              required: true,
-              minLength: 3,
-              maxLength: 20,
-            })}
+            {...register("username")}
           />
           {errors?.username && <span className={style.validate}>invalid name</span>}
         </label>
         <label className={style.label}>
           <span>Email address</span>
-          <input
-            autoComplete="off"
-            className={style.input}
-            placeholder="Email address"
-            {...register("email", {
-              required: true,
-              pattern: patternEmail,
-            })}
-          />
+          <input autoComplete="off" className={style.input} placeholder="Email address" {...register("email")} />
           {errors?.email && <span className={style.validate}>invalid email address</span>}
         </label>
         <label className={style.label}>
@@ -76,11 +65,8 @@ const FormSignUp = () => {
             autoComplete="off"
             className={style.input}
             placeholder="Password"
-            {...register("password", {
-              required: true,
-              minLength: 6,
-              maxLength: 40,
-            })}
+            type="password"
+            {...register("password")}
           />
           {errors?.password && <span className={style.validate}>invalid password</span>}
         </label>
@@ -89,20 +75,20 @@ const FormSignUp = () => {
           <input
             className={style.input}
             autoComplete="off"
+            type="password"
             placeholder="Repeat Password"
-            {...register("repeatPassword", {
-              required: true,
-            })}
+            {...register("repeatPassword")}
           />
         </label>
         <label className={style.labelCheckbox}>
-          <input className={style.checkbox} type="checkbox" {...register("checkbox", { required: true })} />
+          <input className={style.checkbox} type="checkbox" {...register("checkbox")} />
           <span>I agree to the processing of my personal information</span>
         </label>
+        {errors?.checkbox && <span className={style.validate}>you have not read the information</span>}
         <input className={style.inputSubmit} type="submit" value={"Create"} />
         <span className={style.link}>
           Already have an account?
-          <Link to="/SignIn">
+          <Link to={path.singIn}>
             <span className={style.textLink}> Sign In.</span>
           </Link>
         </span>

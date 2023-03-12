@@ -1,29 +1,24 @@
 import { Link } from "react-router-dom";
 import { format, parseISO } from "date-fns";
-import { v4 } from "uuid";
 
 import Rate from "../Rate/Rate";
 import type { ArticleType } from "../../types";
+import { path } from "../../path/path";
 
 import style from "./ShortArticle.module.scss";
 
 const ShortArticle = (props: ArticleType) => {
-  const tags: Array<JSX.Element> = [];
-  if (props.tagList) {
-    props.tagList.forEach((el) => {
-      tags.push(
-        <span key={v4()} className={style.tag}>
-          {el}
-        </span>
-      );
-    });
-  }
+  const tags = props.tagList?.map((el) => (
+    <span key={el} className={style.tag}>
+      {el}
+    </span>
+  ));
 
   return (
     <div className={style.wrapper}>
       <div className={style.content}>
         <div className={style.header}>
-          <Link to={`/Article/${props.slug}`} className={style.title}>
+          <Link to={`${path.article}${props.slug}`} className={style.title}>
             {props.title}
           </Link>
           <Rate {...props} />

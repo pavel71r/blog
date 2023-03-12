@@ -10,9 +10,15 @@ import FormEditProfile from "../FormEditProfile/FormEditProfile";
 import CreateArticle from "../CreateArticle/CreateArticle";
 import Article from "../Article/Article";
 import { getArticles } from "../../store/slice/articleSlice";
-import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
+import { useAppDispatch } from "../../hooks/useAppDispatch";
+import { useAppSelector } from "../../hooks/useAppSelector";
 import { loginUser } from "../../store/slice/userSlice";
 import Private from "../../hoc/Private";
+import LocalStorage from "../../services/localStorage";
+import { path } from "../../path/path";
+import EditArticle from "../EditArticle/EditArticle";
+
+const UserLocalStorage = new LocalStorage();
 
 const App = () => {
   const dispatch = useAppDispatch();
@@ -20,11 +26,11 @@ const App = () => {
   const { token } = useAppSelector((state) => state.userSlice.user);
 
   useEffect(() => {
-    if (localStorage.getItem("email") && token === "") {
+    if (UserLocalStorage.getEmail() && token === "") {
       dispatch(
         loginUser({
-          email: localStorage.getItem("email"),
-          password: localStorage.getItem("pass"),
+          email: UserLocalStorage.getEmail(),
+          password: UserLocalStorage.getPassword(),
         })
       );
     }
@@ -35,20 +41,21 @@ const App = () => {
     <React.Fragment>
       <Header />
       <Routes>
-        <Route path="/SignUp" element={<FormSignUp />} />
-        <Route path="/SignIn" element={<FormSignIn />} />
-        <Route path="/Article/:slug" element={<Article />} />
+        <Route path={path.singUp} element={<FormSignUp />} />
+        <Route path={path.singIn} element={<FormSignIn />} />
+        <Route path={`${path.article}:slug`} element={<Article />} />
         <Route
-          path="/CreateArticle"
+          path={path.createArticle}
           element={
             <Private>
               <CreateArticle />
             </Private>
           }
         />
-        <Route path="/EditProfile" element={<FormEditProfile />} />
+        <Route path={path.editArticle} element={<EditArticle />} />
+        <Route path={path.editProfile} element={<FormEditProfile />} />
         <Route
-          path="/"
+          path={path.home}
           element={
             <React.Fragment>
               <ArticleList />

@@ -1,7 +1,5 @@
-import { v4 } from "uuid";
-
 import ShortArticle from "../ShortArticle/ShortArticle";
-import { useAppSelector } from "../../hooks/hooks";
+import { useAppSelector } from "../../hooks/useAppSelector";
 
 import style from "./ArticleList.module.scss";
 
@@ -10,7 +8,7 @@ const ArticleList = () => {
 
   const elements = articles.map((el) => {
     return (
-      <li key={v4()}>
+      <li key={el.slug}>
         <ShortArticle {...el} />
       </li>
     );

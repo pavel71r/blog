@@ -2,12 +2,13 @@ import { useParams, useNavigate } from "react-router-dom";
 import React, { useEffect } from "react";
 import { format, parseISO } from "date-fns";
 import { Popconfirm as Popup } from "antd";
-import { v4 } from "uuid";
 import ReactMarkdown from "react-markdown";
 
 import { getArticle, deleteArticle } from "../../store/slice/articleSlice";
-import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
+import { useAppDispatch } from "../../hooks/useAppDispatch";
+import { useAppSelector } from "../../hooks/useAppSelector";
 import Rate from "../Rate/Rate";
+import { path } from "../../path/path";
 
 import style from "./Article.module.scss";
 
@@ -24,23 +25,18 @@ const Article = () => {
 
   if (slug !== article.slug) return <React.Fragment />;
 
-  const tags: Array<JSX.Element> = [];
-  if (article.tagList) {
-    article.tagList.forEach((el) => {
-      tags.push(
-        <span key={v4()} className={style.tag}>
-          {el}
-        </span>
-      );
-    });
-  }
+  const tags = article.tagList?.map((el) => (
+    <span key={el} className={style.tag}>
+      {el}
+    </span>
+  ));
 
   const onDelete = () => {
-    dispatch(deleteArticle({ slug, token })).then(() => navigate("/"));
+    dispatch(deleteArticle({ slug, token })).then(() => navigate(path.home));
   };
 
   const onEdit = () => {
-    navigate("/CreateArticle", { state: "article" });
+    navigate(path.editArticle, { state: "article" });
   };
 
   return (

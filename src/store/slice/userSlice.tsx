@@ -1,67 +1,42 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
 
-import type { UserStateType, CreateUserType, LoginUserType, UpdateUserType } from "../../types";
+import LocalStorage from "../../services/localStorage";
+import UserService from "../../services/userService";
+import type { CreateUserType, LoginUserType, UpdateUserType } from "../../types";
+
+type UserStateType = {
+  user: UserType;
+  statusUser: string;
+};
+
+type UserType = {
+  token: string;
+  email: string;
+  username: string;
+  image: string;
+};
+
+const UserServices = new UserService();
+const UserLocalStorage = new LocalStorage();
 
 export const createUser = createAsyncThunk<UserStateType, CreateUserType>(
   "userSlice/createUser",
   async function (user, { rejectWithValue }) {
-    return axios({
-      method: "POST",
-      url: "https://blog.kata.academy/api/users",
-      data: {
-        user: {
-          username: user.username,
-          email: user.email,
-          password: user.password,
-        },
-      },
-    })
-      .then((response) => response.data)
-      .catch(() => rejectWithValue(null));
+    return UserServices.userCreate(user, { rejectWithValue });
   }
 );
 
 export const loginUser = createAsyncThunk<UserStateType, LoginUserType>(
   "userSlice/loginUser",
   async (user, { rejectWithValue }) => {
-    return axios({
-      method: "POST",
-      url: "https://blog.kata.academy/api/users/login",
-      data: {
-        user: {
-          email: user.email,
-          password: user.password,
-        },
-      },
-    })
-      .then((response) => {
-        localStorage.setItem("email", String(user.email));
-        localStorage.setItem("pass", String(user.password));
-        return response.data;
-      })
-      .catch(() => rejectWithValue(null));
+    return UserServices.userLogin(user, { rejectWithValue });
   }
 );
 
 export const updateUser = createAsyncThunk<UserStateType, UpdateUserType>(
   "userSlice/updateUser",
   async ({ user, token }, { rejectWithValue }) => {
-    return axios({
-      method: "PUT",
-      url: "https://blog.kata.academy/api/user",
-      headers: {
-        Authorization: `Token ${token}`,
-      },
-      data: {
-        user,
-      },
-    })
-      .then((response) => {
-        localStorage.setItem("pass", user.password);
-        return response.data;
-      })
-      .catch(() => rejectWithValue(null));
+    return UserServices.userUpdate({ user, token }, { rejectWithValue });
   }
 );
 
@@ -76,8 +51,7 @@ const userSlice = createSlice({
   reducers: {
     logOut(state) {
       state.user = { token: "", email: "", username: "", image: "" };
-      localStorage.removeItem("email");
-      localStorage.removeItem("pass");
+      UserLocalStorage.logout();
     },
     resetStatus(state) {
       state.statusUser = "success";

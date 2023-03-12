@@ -1,119 +1,63 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
 
+import ArticleService from "../../services/articleService";
 import type {
-  ArticleStateType,
   DeleteArticleType,
+  ArticleStateType,
   GetArticlesType,
   GetArticleType,
   NewArticleType,
   UpdateArticleType,
 } from "../../types";
 
+const ArticleServices = new ArticleService();
+
 export const getArticles = createAsyncThunk<ArticleStateType, GetArticlesType>(
   "articleSlice/getArticles",
   async function ({ value = 1, token }) {
-    const num = value > 1 ? 5 * value : 0;
-
-    return axios({
-      url: `https://blog.kata.academy/api/articles?offset=${num}&limit=5`,
-      headers: {
-        Authorization: `Token ${token}`,
-      },
-    }).then((response) => response.data);
+    return ArticleServices.articlesGet({ value, token });
   }
 );
 
 export const newArticle = createAsyncThunk<ArticleStateType, NewArticleType>(
   "articleSlice/newArticle",
   async ({ article, token, tagList }) => {
-    return axios({
-      method: "POST",
-      url: "https://blog.kata.academy/api/articles",
-      headers: {
-        Authorization: `Token ${token}`,
-      },
-      data: {
-        article: {
-          title: article.title,
-          description: article.description,
-          body: article.body,
-          tagList,
-        },
-      },
-    }).then((response) => response.data);
+    return ArticleServices.articleNew({ article, token, tagList });
   }
 );
 
 export const updateArticle = createAsyncThunk<ArticleStateType, UpdateArticleType>(
   "articleSlice/updateArticle",
   async ({ article, token, slug, tagList }) => {
-    return axios({
-      method: "PUT",
-      url: `https://blog.kata.academy/api/articles/${slug}`,
-      headers: {
-        Authorization: `Token ${token}`,
-      },
-      data: {
-        article: {
-          title: article.title,
-          description: article.description,
-          body: article.body,
-          tagList,
-        },
-      },
-    }).then((response) => response.data);
+    return ArticleServices.articleUpdate({ article, token, slug, tagList });
   }
 );
 
 export const getArticle = createAsyncThunk<ArticleStateType, GetArticleType>(
   "articleSlice/getArticle",
   async (value) => {
-    return axios({
-      url: `https://blog.kata.academy/api/articles/${value.slug}`,
-      headers: {
-        Authorization: `Token ${value.token}`,
-      },
-    }).then((response) => response.data);
+    return ArticleServices.articleGet(value);
   }
 );
 
 export const deleteArticle = createAsyncThunk<ArticleStateType, DeleteArticleType>(
   "articleSlice/deleteArticle",
   async (value) => {
-    return axios({
-      method: "DELETE",
-      url: `https://blog.kata.academy/api/articles/${value.slug}`,
-      headers: {
-        Authorization: `Token ${value.token}`,
-      },
-    }).then((response) => response.data);
+    return ArticleServices.articleDelete(value);
   }
 );
 
 export const likeArticle = createAsyncThunk<ArticleStateType, DeleteArticleType>(
   "articleSlice/likeArticle",
   async (value) => {
-    return axios({
-      method: "POST",
-      url: `https://blog.kata.academy/api/articles/${value.slug}/favorite`,
-      headers: {
-        Authorization: `Token ${value.token}`,
-      },
-    }).then((response) => response.data);
+    return ArticleServices.articleLike(value);
   }
 );
 
 export const likeDelete = createAsyncThunk<ArticleStateType, DeleteArticleType>(
   "articleSlice/likeDelete",
   async (value) => {
-    return axios({
-      method: "DELETE",
-      url: `https://blog.kata.academy/api/articles/${value.slug}/favorite`,
-      headers: {
-        Authorization: `Token ${value.token}`,
-      },
-    }).then((response) => response.data);
+    return ArticleServices.deleteLike(value);
   }
 );
 

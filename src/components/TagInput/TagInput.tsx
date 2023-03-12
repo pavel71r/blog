@@ -2,10 +2,13 @@ import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { v4 } from "uuid";
 
-import { useAppSelector } from "../../hooks/hooks";
-import type { TagType } from "../../types";
+import { useAppSelector } from "../../hooks/useAppSelector";
 
 import style from "./TagInput.module.scss";
+
+type TagType = {
+  updateTagList: (value: { id: string; value: string }[]) => void;
+};
 
 const TagInput = ({ updateTagList }: TagType) => {
   const { tagList } = useAppSelector((state) => state.articleSlice.article);
@@ -26,6 +29,7 @@ const TagInput = ({ updateTagList }: TagType) => {
     const newTag = [...state];
     newTag.splice(idx, 1);
     setState(newTag);
+    updateTagList(newTag);
   };
 
   const updateTag = (value: string, id: string) => {

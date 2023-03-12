@@ -2,10 +2,16 @@ import { HeartOutlined, HeartFilled } from "@ant-design/icons";
 import { Button } from "antd";
 
 import { likeArticle, likeDelete } from "../../store/slice/articleSlice";
-import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
-import type { RateType } from "../../types";
+import { useAppDispatch } from "../../hooks/useAppDispatch";
+import { useAppSelector } from "../../hooks/useAppSelector";
 
 import style from "./Rate.module.scss";
+
+type RateType = {
+  slug: string;
+  favorited: boolean;
+  favoritesCount: number;
+};
 
 const Rate = ({ slug, favorited, favoritesCount }: RateType) => {
   const dispatch = useAppDispatch();

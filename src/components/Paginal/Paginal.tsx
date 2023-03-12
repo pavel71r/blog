@@ -1,7 +1,8 @@
 import { Pagination } from "antd";
 
 import "./Paginal.css";
-import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
+import { useAppDispatch } from "../../hooks/useAppDispatch";
+import { useAppSelector } from "../../hooks/useAppSelector";
 import { getArticles } from "../../store/slice/articleSlice";
 
 const Paginal = () => {
