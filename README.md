@@ -1,1 +1,1 @@
-https://blog-o0e6fu2fc-pavel71r.vercel.app/
+https://blog-24qdylu6e-pavel71r.vercel.app/
